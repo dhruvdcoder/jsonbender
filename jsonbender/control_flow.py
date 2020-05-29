@@ -1,4 +1,4 @@
-from jsonbender.core import Bender
+from jsonbender.core import Bender, Transport
 from jsonbender.selectors import K
 
 
