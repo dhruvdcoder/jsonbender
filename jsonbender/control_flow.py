@@ -25,12 +25,21 @@ class If(Bender):
         self.condition = condition
         self.when_true = when_true
         self.when_false = when_false
+    
+    def raw_execute(self, source):
+        source = Transport.from_source(source)
+
+        if self.condition(source):
+            res_val = self.when_true(source)
+        else:
+            res_val = self.when_false(source)
+        res_transport = Transport(res_val, source.context)
+
+        return res_transport
 
     def execute(self, val):
-        return (self.when_true(val)
-                if self.condition(val)
-                else self.when_false(val))
-
+        return self.when_true(val) if self.condition(val) else self.when_false(val)
+    
 
 class Alternation(Bender):
     """
